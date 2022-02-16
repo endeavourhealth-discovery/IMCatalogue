@@ -11,7 +11,7 @@
         <div class="p-d-flex p-flex-row p-jc-center p-ai-center loading-container" v-if="loading">
           <ProgressSpinner />
         </div>
-        <DataTable v-else-if="isCorrectInputData" :value="tableData" class="p-datatable-sm" :scrollable="true" scrollHeight="350px">
+        <DataTable v-else :value="tableData" class="p-datatable-sm" :scrollable="true" scrollHeight="350px">
           <template #header>
             Ontology data
           </template>
@@ -27,8 +27,6 @@
 import { defineComponent, PropType } from "vue";
 import { RDFS } from "@/vocabulary/RDFS";
 import { OWL } from "@/vocabulary/OWL";
-import { isObjectHasKeys } from "@/helpers/DataTypeCheckers";
-
 export default defineComponent({
   name: "ReportTable",
   props: {
@@ -37,40 +35,23 @@ export default defineComponent({
     inputData: { type: Array as PropType<Array<any>>, required: true },
     id: { type: String, required: true }
   },
-  computed: {
-    isCorrectInputData(): boolean {
-      return this.inputData.every(item => {
-        if (isObjectHasKeys(item, [RDFS.LABEL, OWL.HAS_VALUE]) || isObjectHasKeys(item, ["count", "label"])) return true;
-        else return false;
-      });
-    }
-  },
   data() {
     return {
       tableData: [] as { count: number; label: string }[],
       loading: false
     };
   },
-  mounted() {
-    this.getReportTableData();
+  async mounted() {
+    await this.getReportTableData();
   },
   methods: {
-    getReportTableData(): void {
-      if (!this.isCorrectInputData) return;
+    async getReportTableData(): Promise<void> {
       this.loading = true;
       for (const entry of this.inputData) {
-        if (isObjectHasKeys(entry, [RDFS.LABEL, OWL.HAS_VALUE])) {
-          this.tableData.push({
-            label: entry[RDFS.LABEL],
-            count: +entry[OWL.HAS_VALUE]
-          });
-        }
-        if (isObjectHasKeys(entry, ["label", "count"])) {
-          this.tableData.push({
-            label: entry.label,
-            count: +entry.count
-          });
-        }
+        this.tableData.push({
+          label: entry[RDFS.LABEL],
+          count: +entry[OWL.HAS_VALUE]
+        });
       }
       this.loading = false;
     }
@@ -79,16 +60,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.dashcard-container {
-  height: 100%;
-  width: 100%;
+@media screen and (min-width: 1024px) {
+  .dashcard-container {
+    height: calc(50% - 7px);
+    width: calc(50% - 7px);
+  }
 }
-
+@media screen and (max-width: 1023px) {
+  .dashcard-container {
+    height: calc(50% - 7px);
+    width: calc(100%);
+  }
+}
 .dashcard {
   height: 100%;
   width: 100%;
 }
-
 .loading-container {
   width: 100%;
   height: 100%;

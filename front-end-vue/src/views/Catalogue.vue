@@ -1,5 +1,4 @@
 <template>
-  <SideNav />
   <div class="layout-main">
     <div class="catalogue-grid">
       <CatalogueSideBar :typeOptions="types" :history="history" @updateHistory="updateHistory" />
@@ -10,11 +9,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import SideNav from "@/components/home/SideNav.vue";
 import CatalogueService from "@/services/CatalogueService";
 import CatalogueSideBar from "@/components/catalogue/CatalogueSideBar.vue";
 import { mapState } from "vuex";
-import { IM } from "@/vocabulary/IM";
 import { TTBundle } from "@/models/TripleTree";
 import { InstanceHistoryItem } from "@/models/catalogue/InstanceHistoryItem";
 import { SimpleCount } from "@/models/SimpleCount";
@@ -22,7 +19,6 @@ import { SimpleCount } from "@/models/SimpleCount";
 export default defineComponent({
   name: "Catalogue",
   components: {
-    SideNav,
     CatalogueSideBar
   },
   watch: {
@@ -40,29 +36,19 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.updateSideNav();
     await this.init();
   },
   methods: {
     async init(): Promise<void> {
       this.loading = true;
       await this.getTypesCount();
-      if (this.instanceIri.length) {
+      if (this.instanceIri) {
         this.getInstance();
         this.$router.push({ name: "Individual", params: { selectedIri: this.instanceIri } });
       } else {
         this.$router.push({ name: "CatalogueDashboard" });
       }
       this.loading = false;
-    },
-
-    updateSideNav(): void {
-      this.$store.commit("updateSideNavHierarchyFocus", {
-        name: "Catalogue",
-        fullName: "Catalogue",
-        route: "Catalogue",
-        iri: IM.MODULE_CATALOGUE
-      });
     },
 
     async getTypesCount(): Promise<void> {

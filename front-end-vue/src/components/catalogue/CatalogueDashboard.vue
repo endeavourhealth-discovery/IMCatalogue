@@ -29,8 +29,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { PropType } from "@vue/runtime-core";
-import PieChartDashCard from "@/components/dashboard/PieChartDashCard.vue";
-import ReportTable from "@/components/dashboard/ReportTable.vue";
+import PieChartDashCard from "@/components/catalogue/catalogueDashboard/PieChartDashCard.vue";
+import ReportTable from "@/components/catalogue/catalogueDashboard/ReportTable.vue";
 import { SimpleCount } from "@/models/SimpleCount";
 
 export default defineComponent({

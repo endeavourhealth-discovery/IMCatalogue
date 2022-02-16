@@ -17,8 +17,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import LoggerService from "@/services/LoggerService";
-import ResizeablePieChart from "@/components/generics/ResizeablePieChart.vue";
-
+import ResizeablePieChart from "@/components/catalogue/catalogueDashboard/pieChartDashCard/ResizablePieChart.vue";
 export default defineComponent({
   name: "ReportPieChart",
   props: {
@@ -45,7 +44,6 @@ export default defineComponent({
     onResize() {
       this.setChartSize();
     },
-
     setChartSize(): void {
       const container = document.getElementById(this.id) as HTMLElement;
       if (!container) {
@@ -67,26 +65,18 @@ export default defineComponent({
       if (subTitle) {
         height -= subTitle.getBoundingClientRect().height;
       }
-      if (content) {
-        content.style.height = height + "px";
-        content.style.maxHeight = height + "px";
-      }
+      content.style.height = height + "px";
+      content.style.maxHeight = height + "px";
     }
   }
 });
 </script>
 
 <style scoped>
-.dashcard-container {
-  height: 100%;
-  width: 100%;
-}
-
 .dashcard-container ::v-deep(.p-card-body) {
   height: 100%;
   width: 100%;
 }
-
 .dashcard {
   height: 100%;
   width: 100%;
