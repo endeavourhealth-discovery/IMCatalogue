@@ -26,71 +26,6 @@ const APP_TITLE = "Information Model";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/concept/http%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23Thing",
-    redirect: "/"
-  },
-  {
-    path: "/user",
-    name: "User",
-    component: User,
-    children: [
-      {
-        path: "login",
-        name: "Login",
-        component: Login
-      },
-      {
-        path: "confirm-code",
-        name: "ConfirmCode",
-        component: ConfirmCode
-      },
-      {
-        path: "register",
-        name: "Register",
-        component: Register
-      },
-      {
-        path: "my-account",
-        name: "UserDetails",
-        component: UserDetails,
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: "my-account/edit",
-        name: "UserEdit",
-        component: UserEdit,
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: "my-account/password-edit",
-        name: "PasswordEdit",
-        component: PasswordEdit,
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: "logout",
-        name: "Logout",
-        component: Logout
-      },
-      {
-        path: "password-recovery",
-        name: "ForgotPassword",
-        component: ForgotPassword
-      },
-      {
-        path: "password-recovery/submit",
-        name: "ForgotPasswordSubmit",
-        component: ForgotPasswordSubmit
-      }
-    ]
-  },
-  {
     path: "/",
     name: "Home",
     component: Home,
@@ -119,34 +54,6 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: "/editor",
-    name: "Editor",
-    component: Editor,
-    children: [
-      {
-        path: "/editor",
-        name: "Create",
-        component: Editor
-      },
-      {
-        path: "/editor/:iri",
-        name: "Edit",
-        component: Editor
-      }
-    ],
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/workflow",
-    name: "Workflow",
-    component: Workflow,
-    meta: {
-      requiresLicense: true
-    }
-  },
-  {
     path: "/catalogue",
     name: "Catalogue",
     component: Catalogue,
@@ -172,14 +79,6 @@ const routes: Array<RouteRecordRaw> = [
         }
       }
     ]
-  },
-  {
-    path: "/uprn",
-    name: "UPRN",
-    component: UPRN,
-    meta: {
-      requiresLicense: true
-    }
   },
   {
     path: "/snomedLicense",
