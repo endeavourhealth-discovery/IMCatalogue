@@ -1,20 +1,25 @@
-import { SearchRequest } from "./../models/search/SearchRequest";
 import { createStore } from "vuex";
 import EntityService from "../services/EntityService";
-import { HistoryItem } from "../models/HistoryItem";
-import { User } from "../models/user/User";
 import AuthService from "@/services/AuthService";
-import { avatars } from "@/models/user/Avatars";
 import LoggerService from "@/services/LoggerService";
-import { CustomAlert } from "@/models/user/CustomAlert";
 import ConfigService from "@/services/ConfigService";
-import { isArrayHasLength, isObjectHasKeys } from "@/helpers/DataTypeCheckers";
+import { HistoryItem } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers, Models, Constants } from "im-library";
+const {
+  DataTypeCheckers: { isArrayHasLength, isObjectHasKeys }
+} = Helpers;
+const {
+  Search: { SearchRequest },
+  User,
+  CustomAlert
+} = Models;
+const { Avatars } = Constants;
 
 export default createStore({
   // update stateType.ts when adding new state!
   state: {
     history: [] as HistoryItem[],
-    currentUser: {} as User,
+    currentUser: {} as Models.User,
     isLoggedIn: false as boolean,
     snomedLicenseAccepted: localStorage.getItem("snomedLicenseAccepted") as string,
     blockedIris: [] as string[],
@@ -53,7 +58,7 @@ export default createStore({
       const blockedIris = await ConfigService.getXmlSchemaDataTypes();
       commit("updateBlockedIris", blockedIris);
     },
-    async fetchSearchResults({ commit }, data: { searchRequest: SearchRequest; cancelToken: any }) {
+    async fetchSearchResults({ commit }, data: { searchRequest: Models.Search.SearchRequest; cancelToken: any }) {
       const result = await EntityService.advancedSearch(data.searchRequest, data.cancelToken);
       if (result && isArrayHasLength(result)) {
         commit("updateSearchResults", result);
@@ -80,9 +85,9 @@ export default createStore({
         if (res.status === 200 && res.user) {
           commit("updateIsLoggedIn", true);
           const loggedInUser = res.user;
-          const foundAvatar = avatars.find(avatar => avatar === loggedInUser.avatar);
+          const foundAvatar = Avatars.find(avatar => avatar === loggedInUser.avatar);
           if (!foundAvatar) {
-            loggedInUser.avatar = avatars[0];
+            loggedInUser.avatar = Avatars[0];
           }
           commit("updateCurrentUser", loggedInUser);
           result.authenticated = true;

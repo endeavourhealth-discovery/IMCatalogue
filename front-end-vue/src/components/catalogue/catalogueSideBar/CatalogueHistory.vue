@@ -14,9 +14,12 @@
 </template>
 
 <script lang="ts">
-import { isObjectHasKeys } from "@/helpers/DataTypeCheckers";
-import { InstanceHistoryItem } from "@/models/catalogue/InstanceHistoryItem";
 import { defineComponent, PropType } from "@vue/runtime-core";
+import { InstanceHistoryItem } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers } from "im-library";
+const {
+  DataTypeCheckers: { isObjectHasKeys }
+} = Helpers;
 
 export default defineComponent({
   name: "CatalogueHistory",

@@ -1,9 +1,8 @@
-import { SimpleCount } from "@/models/SimpleCount";
-import { TTBundle } from "@/models/TripleTree";
 import axios, { CancelToken } from "axios";
+import { SimpleCount, TTBundle } from "im-library/dist/types/interfaces/Interfaces";
 
 export default class CatalogueService {
-  static api = process.env.VUE_APP_API;
+  static api = import.meta.env.VITE_API;
 
   public static async getSearchResult(request: string, typesIris: string[], cancelToken: CancelToken): Promise<any[]> {
     try {

@@ -1,9 +1,9 @@
 import { Auth } from "aws-amplify";
-import { User } from "@/models/user/User";
-import { CustomAlert } from "@/models/user/CustomAlert";
+import { Models } from "im-library";
+const { CustomAlert, User } = Models;
 
 export default {
-  async signOut(): Promise<CustomAlert> {
+  async signOut(): Promise<Models.CustomAlert> {
     try {
       await Auth.signOut({ global: true });
       return new CustomAlert(200, "Logged out successfully");
@@ -12,7 +12,7 @@ export default {
     }
   },
 
-  async getCurrentAuthenticatedUser(): Promise<CustomAlert> {
+  async getCurrentAuthenticatedUser(): Promise<Models.CustomAlert> {
     try {
       const cognitoUser = await Auth.currentAuthenticatedUser();
       const authenticatedUser = new User(

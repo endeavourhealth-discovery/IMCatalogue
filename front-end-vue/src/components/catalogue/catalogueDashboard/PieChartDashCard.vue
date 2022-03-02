@@ -18,6 +18,7 @@
 import { defineComponent, PropType } from "vue";
 import LoggerService from "@/services/LoggerService";
 import ResizeablePieChart from "@/components/catalogue/catalogueDashboard/pieChartDashCard/ResizablePieChart.vue";
+
 export default defineComponent({
   name: "ReportPieChart",
   props: {

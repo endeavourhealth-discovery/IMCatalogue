@@ -1,8 +1,11 @@
 import axios, { CancelToken } from "axios";
-import { SearchResponse } from "@/models/entityServiceTypes/EntityServiceTypes";
+import { Models } from "im-library";
+const {
+  Search: { SearchResponse }
+} = Models;
 
 export default class SetService {
-  static api = process.env.VUE_APP_API;
+  static api = import.meta.env.VITE_API as string;
 
   public static async download(conceptIri: string, expanded: boolean, v1: boolean) {
     return await axios.get(this.api + "api/set/public/download", {
@@ -16,7 +19,7 @@ export default class SetService {
     });
   }
 
-  public static async ECLSearch(searchString: string, includeLegacy: boolean, limit: number, cancelToken: CancelToken): Promise<SearchResponse> {
+  public static async ECLSearch(searchString: string, includeLegacy: boolean, limit: number, cancelToken: CancelToken): Promise<Models.Search.SearchResponse> {
     try {
       return await axios.post(this.api + "api/set/public/eclSearch", searchString, {
         headers: { "Content-Type": "text/plain" },
@@ -24,7 +27,7 @@ export default class SetService {
         cancelToken: cancelToken
       });
     } catch (error) {
-      return {} as SearchResponse;
+      return {} as Models.Search.SearchResponse;
     }
   }
 }

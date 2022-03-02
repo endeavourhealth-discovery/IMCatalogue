@@ -26,12 +26,13 @@
 </template>
 
 <script lang="ts">
-import { isObjectHasKeys } from "@/helpers/DataTypeCheckers";
-import { TTBundle, TTIriRef } from "@/models/TripleTree";
-import { IM } from "@/vocabulary/IM";
-import { RDFS } from "@/vocabulary/RDFS";
 import { defineComponent, PropType } from "@vue/runtime-core";
-import { InstanceTreeItem } from "@/models/catalogue/InstanceTreeItem";
+import { InstanceTreeItem, TTBundle, TTIriRef } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers, Vocabulary } from "im-library";
+const {
+  DataTypeCheckers: { isObjectHasKeys }
+} = Helpers;
+const { IM, RDFS } = Vocabulary;
 
 export default defineComponent({
   name: "InstanceDetails",

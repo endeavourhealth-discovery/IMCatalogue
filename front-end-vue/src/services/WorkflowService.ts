@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class WorkflowService {
-  static api = process.env.VUE_APP_API;
+  static api = import.meta.env.VITE_API;
 
   public static async getWorkflows(): Promise<any[]> {
     try {

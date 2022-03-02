@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Loader } from "@googlemaps/js-api-loader";
-import { MapPin } from "@/models/uprn/MapPin";
+import { MapPin } from "im-library/dist/types/interfaces/Interfaces";
 
 export default defineComponent({
   name: "GMap",
@@ -50,7 +50,7 @@ export default defineComponent({
   methods: {
     async init(): Promise<void> {
       const loader = new Loader({
-        apiKey: process.env.VUE_APP_GOOGLEMAPS_KEY || ""
+        apiKey: (import.meta.env.VITE_GOOGLEMAPS_KEY as string) || ""
       });
 
       await loader.load().then(google => {

@@ -12,9 +12,7 @@ import { defineComponent } from "vue";
 import CatalogueService from "@/services/CatalogueService";
 import CatalogueSideBar from "@/components/catalogue/CatalogueSideBar.vue";
 import { mapState } from "vuex";
-import { TTBundle } from "@/models/TripleTree";
-import { InstanceHistoryItem } from "@/models/catalogue/InstanceHistoryItem";
-import { SimpleCount } from "@/models/SimpleCount";
+import { InstanceHistoryItem, TTBundle, SimpleCount } from "im-library/dist/types/interfaces/Interfaces";
 
 export default defineComponent({
   name: "Catalogue",

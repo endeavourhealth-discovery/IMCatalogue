@@ -1,14 +1,17 @@
-import { SearchResponse } from "@/models/uprn/SearchResponse";
-import { UPRN } from "@/models/uprn/UPRN";
 import axios from "axios";
+import { UPRN } from "im-library/dist/types/interfaces/Interfaces";
+import { Models } from "im-library";
+const {
+  Search: { SearchResponse }
+} = Models;
 
 export default class UprnService {
-  static api = process.env.VUE_APP_UPRN_API;
-  static username = process.env.VUE_APP_UPRN_USERNAME || "";
-  static password = process.env.VUE_APP_UPRN_PASSWORD || "";
-  static userId = process.env.VUE_APP_UPRN_USERID || "";
+  static api = import.meta.env.VITE_UPRN_API;
+  static username = (import.meta.env.VITE_UPRN_USERNAME as string) || "";
+  static password = (import.meta.env.VITE_UPRN_PASSWORD as string) || "";
+  static userId = (import.meta.env.VITE_UPRN_USERID as string) || "";
 
-  public static async findUprn(address: string, area?: string): Promise<SearchResponse> {
+  public static async findUprn(address: string, area?: string): Promise<Models.Search.SearchResponse> {
     const config = {
       params: { adrec: address },
       auth: {
@@ -21,7 +24,7 @@ export default class UprnService {
     try {
       return await axios.get(this.api + "/getinfo", config);
     } catch (error) {
-      return {} as SearchResponse;
+      return {} as Models.Search.SearchResponse;
     }
   }
 

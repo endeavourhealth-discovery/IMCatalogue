@@ -32,9 +32,12 @@
 </template>
 
 <script lang="ts">
-import { isObjectHasKeys } from "@/helpers/DataTypeCheckers";
-import { InstanceSearchResult } from "@/models/catalogue/InstanceSearchResult";
 import { defineComponent, PropType } from "@vue/runtime-core";
+import { InstanceSearchResult } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers } from "im-library";
+const {
+  DataTypeCheckers: { isObjectHasKeys }
+} = Helpers;
 
 export default defineComponent({
   name: "CatalogueSearchResults",

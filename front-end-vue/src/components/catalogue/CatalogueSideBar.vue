@@ -40,13 +40,14 @@ import { defineComponent, PropType } from "@vue/runtime-core";
 import CatalogueSearchResults from "@/components/catalogue/catalogueSideBar/CatalogueSearchResults.vue";
 import CatalogueFilters from "@/components/catalogue/catalogueSideBar/CatalogueFilters.vue";
 import CatalogueHistory from "@/components/catalogue/catalogueSideBar/CatalogueHistory.vue";
-import { isArrayHasLength, isObject } from "@/helpers/DataTypeCheckers";
 import axios from "axios";
 import { mapState } from "vuex";
-import { InstanceHistoryItem } from "@/models/catalogue/InstanceHistoryItem";
-import { SimpleCount } from "@/models/SimpleCount";
-import { InstanceSearchResult } from "@/models/catalogue/InstanceSearchResult";
-import { getContainerElementOptimalHeight } from "@/helpers/GetContainerElementOptimalHeight";
+import { InstanceHistoryItem, SimpleCount, InstanceSearchResult } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers } from "im-library";
+const {
+  DataTypeCheckers: { isArrayHasLength, isObject },
+  ContainerDimensionGetters: { getContainerElementOptimalHeight }
+} = Helpers;
 
 export default defineComponent({
   name: "CatalogueSideBar",

@@ -9,10 +9,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-const palette = require("../../../../../node_modules/google-palette");
-import { PieChartData } from "@/models/charts/PieChartData";
-import { setTooltips, rescaleData } from "@/helpers/ChartRescale";
-import { ChartOptions } from "@/models/charts/ChartOptions";
+import palette from "google-palette";
+import { ChartOptions } from "im-library/dist/types/interfaces/Interfaces";
+import { Helpers, Models } from "im-library";
+const {
+  ChartRescale: { setTooltips, rescaleData }
+} = Helpers;
+const { PieChartData } = Models;
+
 export default defineComponent({
   name: "ResizablePieChart",
   props: {

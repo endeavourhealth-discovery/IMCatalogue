@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts">
-import { SimpleCount } from "@/models/SimpleCount";
 import { defineComponent, PropType } from "@vue/runtime-core";
+import { SimpleCount } from "im-library/dist/types/interfaces/Interfaces";
 
 export default defineComponent({
   name: "CatalogueFilters",

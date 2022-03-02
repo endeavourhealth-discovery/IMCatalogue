@@ -31,7 +31,7 @@ import { defineComponent } from "vue";
 import { PropType } from "@vue/runtime-core";
 import PieChartDashCard from "@/components/catalogue/catalogueDashboard/PieChartDashCard.vue";
 import ReportTable from "@/components/catalogue/catalogueDashboard/ReportTable.vue";
-import { SimpleCount } from "@/models/SimpleCount";
+import { SimpleCount } from "im-library/dist/types/interfaces/Interfaces";
 
 export default defineComponent({
   name: "CatalogueDashboard",

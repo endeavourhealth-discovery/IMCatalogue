@@ -25,8 +25,10 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { RDFS } from "@/vocabulary/RDFS";
-import { OWL } from "@/vocabulary/OWL";
+import {} from "im-library/dist/types/interfaces/Interfaces";
+import { Vocabulary } from "im-library";
+const { RDFS, OWL } = Vocabulary;
+
 export default defineComponent({
   name: "ReportTable",
   props: {

@@ -28,10 +28,10 @@ describe("InstanceDetails.vue", () => {
   };
 
   beforeEach(async () => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
-    mockRouter = { push: jest.fn() };
-    mockStore = { commit: jest.fn() };
+    mockRouter = { push: vi.fn() };
+    mockStore = { commit: vi.fn() };
 
     wrapper = shallowMount(InstanceDetails, {
       global: { components: { ProgressSpinner, Panel, Button, Tree }, directives: { Tooltip: Tooltip }, mocks: { $store: mockStore, $router: mockRouter } },
@@ -39,7 +39,7 @@ describe("InstanceDetails.vue", () => {
     });
 
     await wrapper.vm.$nextTick();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("mounts", () => {
@@ -57,7 +57,7 @@ describe("InstanceDetails.vue", () => {
   });
 
   it("processInstance on instance change", () => {
-    wrapper.vm.processInstance = jest.fn();
+    wrapper.vm.processInstance = vi.fn();
     wrapper.vm.$options.watch.instance.call(wrapper.vm, true);
     expect(wrapper.vm.processInstance).toHaveBeenCalledTimes(1);
   });
