@@ -58,14 +58,7 @@ export default createStore({
       const blockedIris = await ConfigService.getXmlSchemaDataTypes();
       commit("updateBlockedIris", blockedIris);
     },
-    async fetchSearchResults({ commit }, data: { searchRequest: Models.Search.SearchRequest; cancelToken: any }) {
-      const result = await EntityService.advancedSearch(data.searchRequest, data.cancelToken);
-      if (result && isArrayHasLength(result)) {
-        commit("updateSearchResults", result);
-      } else {
-        commit("updateSearchResults", []);
-      }
-    },
+
     async logoutCurrentUser({ commit }) {
       let result = new CustomAlert(500, "Logout (store) failed");
       await AuthService.signOut().then(res => {
