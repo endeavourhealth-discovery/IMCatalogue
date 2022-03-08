@@ -39,8 +39,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/snomedLicense",
     name: "License",
-    component: SnomedLicense,
-    props: { returnUrl: import.meta.env.VITE_CATALOGUE_URL as string }
+    component: SnomedLicense
   }
 ];
 
@@ -51,6 +50,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const iri = to.params.selectedIri as string;
+  const currentUrl = import.meta.env.VITE_CATALOGUE_URL + "/#" + to.path;
+  if (to.path !== "/snomedLicense") {
+    store.commit("updateSnomedReturnUrl", currentUrl);
+    store.commit("updateAuthReturnUrl", currentUrl);
+  }
   if (iri && store.state.blockedIris.includes(iri)) {
     return;
   }
@@ -62,7 +66,7 @@ router.beforeEach((to, from, next) => {
       console.log("auth guard user authenticated:" + res.authenticated);
       if (!res.authenticated) {
         console.log("redirecting to login");
-        window.location.href = import.meta.env.VITE_AUTH_URL + "login?returnUrl=VITE_CATALOGUE_URL";
+        window.location.href = import.meta.env.VITE_AUTH_URL + "login?returnUrl=" + currentUrl;
       } else {
         if (to.matched.some(record => record.meta.requiresLicense)) {
           console.log("snomed license accepted:" + store.state.snomedLicenseAccepted);

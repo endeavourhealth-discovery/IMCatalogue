@@ -22,6 +22,8 @@ export default createStore({
     currentUser: {} as Models.User,
     isLoggedIn: false as boolean,
     snomedLicenseAccepted: localStorage.getItem("snomedLicenseAccepted") as string,
+    snomedReturnUrl: "",
+    authReturnUrl: "",
     blockedIris: [] as string[],
     instanceIri: "",
     catalogueSearchResults: [] as string[]
@@ -45,6 +47,12 @@ export default createStore({
     updateSnomedLicenseAccepted(state, status: string) {
       state.snomedLicenseAccepted = status;
       localStorage.setItem("snomedLicenseAccepted", status);
+    },
+    updateSnomedReturnUrl(state, url) {
+      state.snomedReturnUrl = url;
+    },
+    updateAuthReturnUrl(state, url) {
+      state.authReturnUrl = url;
     },
     updateInstanceIri(state, instanceIri) {
       state.instanceIri = instanceIri;
