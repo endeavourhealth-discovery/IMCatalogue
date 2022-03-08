@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Catalogue from "../views/Catalogue.vue";
 import CatalogueDashboard from "@/components/catalogue/CatalogueDashboard.vue";
 import InstanceDetails from "@/components/catalogue/InstanceDetails.vue";
-import SnomedLicense from "../views/SnomedLicense.vue";
+import { SnomedLicense } from "im-library";
 import store from "@/store/index";
 import { nextTick } from "vue";
 
@@ -39,7 +39,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/snomedLicense",
     name: "License",
-    component: SnomedLicense
+    component: SnomedLicense,
+    props: { returnUrl: import.meta.env.VITE_CATALOGUE_URL as string }
   }
 ];
 
@@ -53,15 +54,15 @@ router.beforeEach((to, from, next) => {
   if (iri && store.state.blockedIris.includes(iri)) {
     return;
   }
-  store.commit("updateInstanceIri", to.params.selectedIri as string);
+  if (iri) {
+    store.commit("updateInstanceIri", to.params.selectedIri as string);
+  }
   if (to.matched.some(record => record.meta.requiresAuth)) {
     store.dispatch("authenticateCurrentUser").then(res => {
       console.log("auth guard user authenticated:" + res.authenticated);
       if (!res.authenticated) {
         console.log("redirecting to login");
-        next({
-          path: "/user/login"
-        });
+        window.location.href = import.meta.env.VITE_AUTH_URL + "login?returnUrl=VITE_CATALOGUE_URL";
       } else {
         if (to.matched.some(record => record.meta.requiresLicense)) {
           console.log("snomed license accepted:" + store.state.snomedLicenseAccepted);
