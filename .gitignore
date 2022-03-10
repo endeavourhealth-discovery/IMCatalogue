@@ -36,10 +36,25 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.js
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
+
+out
+.idea
+.metadata
+.gradle
+.vscode
+target
+*.iml
+*.settings
+*.project
+*.classpath
+coverage
+
+# Ignore Gradle build output directory
+build
+.env
