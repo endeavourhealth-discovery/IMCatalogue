@@ -29,6 +29,8 @@ describe("state", () => {
       "currentUser",
       "isLoggedIn",
       "snomedLicenseAccepted",
+      "snomedReturnUrl",
+      "authReturnUrl",
       "blockedIris",
       "instanceIri",
       "catalogueSearchResults"

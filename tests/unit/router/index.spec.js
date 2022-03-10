@@ -189,7 +189,7 @@ describe("router", () => {
     it("updates instanceIri on individual routing", async () => {
       router.push({ name: "Individual", params: { selectedIri: "http://snomed.info/sct#298382003" } });
       await flushPromises();
-      expect(store.commit).toHaveBeenCalledTimes(1);
+      expect(store.commit).toHaveBeenCalledTimes(3);
       expect(store.commit).toHaveBeenCalledWith("updateInstanceIri", "http://snomed.info/sct#298382003");
       expect(wrapper.vm.$route.path).toBe("/individual/http:%2F%2Fsnomed.info%2Fsct%23298382003");
     });
