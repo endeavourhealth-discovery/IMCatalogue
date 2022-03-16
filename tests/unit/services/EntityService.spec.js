@@ -1,12 +1,12 @@
 import EntityService from "@/services/EntityService";
 import SetService from "@/services/SetService";
 import axios from "axios";
-import { Models } from "im-library";
+import { Models, Env } from "im-library";
 const {
   Search: { SearchRequest }
 } = Models;
 
-const api = import.meta.env.VITE_API;
+const api = Env.api;
 const SEARCH_PAYLOAD = {
   size: 100,
   query: {
@@ -271,7 +271,7 @@ describe("EntityService.ts ___ axios success", () => {
 });
 
 describe("EntityService.ts ___ axios fail", () => {
-  const api = import.meta.env.VITE_API;
+  const api = Env.api;
 
   beforeEach(() => {
     vi.resetAllMocks();

@@ -1,5 +1,8 @@
 import WorkflowService from "@/services/WorkflowService";
 import axios from "axios";
+import {Env} from "im-library";
+
+const api = Env.api;
 
 describe("WorkflowService.ts ___ axios success", () => {
   beforeEach(() => {
@@ -8,7 +11,6 @@ describe("WorkflowService.ts ___ axios success", () => {
   });
 
   it("can getWorkflows", async () => {
-    const api = import.meta.env.VITE_API;
     const result = await WorkflowService.getWorkflows();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(api + "workflow");
@@ -16,7 +18,6 @@ describe("WorkflowService.ts ___ axios success", () => {
   });
 
   it("can getWorkflowTasks", async () => {
-    const api = import.meta.env.VITE_API;
     const result = await WorkflowService.getWorkflowTasks();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(api + "workflow/tasks");
@@ -31,7 +32,6 @@ describe("WorkflowService.ts ___ axios fail", () => {
   });
 
   it("can getWorkflows", async () => {
-    const api = import.meta.env.VITE_API;
     const result = await WorkflowService.getWorkflows();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(api + "workflow");
@@ -39,7 +39,6 @@ describe("WorkflowService.ts ___ axios fail", () => {
   });
 
   it("can getWorkflowTasks", async () => {
-    const api = import.meta.env.VITE_API;
     const result = await WorkflowService.getWorkflowTasks();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(api + "workflow/tasks");

@@ -1,11 +1,11 @@
 import axios, { CancelToken } from "axios";
-import { Models } from "im-library";
+import { Models, Env } from "im-library";
 const {
   Search: { SearchResponse }
 } = Models;
 
 export default class SetService {
-  static api = import.meta.env.VITE_API as string;
+  static api = Env.api;
 
   public static async download(conceptIri: string, expanded: boolean, v1: boolean) {
     return await axios.get(this.api + "api/set/public/download", {

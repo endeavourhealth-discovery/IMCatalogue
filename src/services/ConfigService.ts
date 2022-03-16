@@ -1,7 +1,8 @@
 import axios from "axios";
+import {Env} from "im-library";
 
 export default class ConfigService {
-  static api = import.meta.env.VITE_API;
+  static api = Env.api;
 
   public static async getXmlSchemaDataTypes(): Promise<any> {
     try {
