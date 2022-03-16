@@ -1,10 +1,8 @@
 import { createStore } from "vuex";
-import EntityService from "../services/EntityService";
 import AuthService from "@/services/AuthService";
-import LoggerService from "@/services/LoggerService";
 import ConfigService from "@/services/ConfigService";
 import { HistoryItem } from "im-library/dist/types/interfaces/Interfaces";
-import { Helpers, Models, Constants } from "im-library";
+import { Helpers, Models, Constants, LoggerService } from "im-library";
 const {
   DataTypeCheckers: { isArrayHasLength, isObjectHasKeys }
 } = Helpers;
