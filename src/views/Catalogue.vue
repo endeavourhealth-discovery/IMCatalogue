@@ -1,5 +1,6 @@
 <template>
   <div class="layout-main">
+    <TopBar />
     <div class="catalogue-grid">
       <CatalogueSideBar :typeOptions="types" :history="history" @updateHistory="updateHistory" />
       <router-view :instanceIri="instanceIri" :instance="instance" :history="history" :types="types" :loading="loading" @updateHistory="updateHistory" />
@@ -68,7 +69,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .catalogue-grid {
-  height: 100%;
+  height: calc(100% - 3.5rem);
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
