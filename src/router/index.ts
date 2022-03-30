@@ -2,9 +2,12 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Catalogue from "../views/Catalogue.vue";
 import CatalogueDashboard from "@/components/catalogue/CatalogueDashboard.vue";
 import InstanceDetails from "@/components/catalogue/InstanceDetails.vue";
-import { SnomedLicense, Env } from "im-library";
+import { SnomedLicense, Env, Helpers } from "im-library";
 import store from "@/store/index";
 import { nextTick } from "vue";
+const {
+  RouterGuards: { checkAuth, checkLicense }
+} = Helpers;
 
 const APP_TITLE = "Information Model";
 
@@ -48,7 +51,8 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  let hasCalledNext = false;
   const iri = to.params.selectedIri as string;
   const currentUrl = Env.catalogueUrl + "#" + to.path;
   if (to.path !== "/snomedLicense") {
@@ -61,39 +65,9 @@ router.beforeEach((to, from, next) => {
   if (iri) {
     store.commit("updateInstanceIri", to.params.selectedIri as string);
   }
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    store.dispatch("authenticateCurrentUser").then(res => {
-      console.log("auth guard user authenticated:" + res.authenticated);
-      if (!res.authenticated) {
-        console.log("redirecting to login");
-        window.location.href = Env.authUrl + "login?returnUrl=" + currentUrl;
-      } else {
-        if (to.matched.some(record => record.meta.requiresLicense)) {
-          console.log("snomed license accepted:" + store.state.snomedLicenseAccepted);
-          if (store.state.snomedLicenseAccepted !== "true") {
-            next({
-              path: "/snomedLicense"
-            });
-          } else {
-            next();
-          }
-        } else {
-          next();
-        }
-      }
-    });
-  } else if (to.matched.some(record => record.meta.requiresLicense)) {
-    console.log("snomed license accepted:" + store.state.snomedLicenseAccepted);
-    if (store.state.snomedLicenseAccepted !== "true") {
-      next({
-        path: "/snomedLicense"
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
+  hasCalledNext = await checkAuth(to, next, store, hasCalledNext, currentUrl);
+  hasCalledNext = checkLicense(to, next, store, hasCalledNext);
+  if (!hasCalledNext) next();
 });
 
 router.afterEach(to => {
