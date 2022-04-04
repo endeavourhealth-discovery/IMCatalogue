@@ -5,9 +5,6 @@ import InstanceDetails from "@/components/catalogue/InstanceDetails.vue";
 import { SnomedLicense, Env, Helpers } from "im-library";
 import store from "@/store/index";
 import { nextTick } from "vue";
-const {
-  RouterGuards: { checkAuth, checkLicense }
-} = Helpers;
 
 const APP_TITLE = "Information Model";
 
@@ -51,8 +48,7 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  let hasCalledNext = false;
+router.beforeEach(async (to, from) => {
   const iri = to.params.selectedIri as string;
   const currentUrl = Env.catalogueUrl + "/#" + to.path;
   if (to.path !== "/snomedLicense") {
@@ -60,14 +56,27 @@ router.beforeEach(async (to, from, next) => {
     store.commit("updateAuthReturnUrl", currentUrl);
   }
   if (iri && store.state.blockedIris.includes(iri)) {
-    return;
+    return false;
   }
   if (iri) {
     store.commit("updateInstanceIri", to.params.selectedIri as string);
   }
-  hasCalledNext = await checkAuth(to, next, store, hasCalledNext, currentUrl);
-  hasCalledNext = checkLicense(to, next, store, hasCalledNext);
-  if (!hasCalledNext) next();
+  if (to.matched.some((record: any) => record.meta.requiresAuth)) {
+    const res = await store.dispatch("authenticateCurrentUser");
+    console.log("auth guard user authenticated: " + res.authenticated);
+    if (!res.authenticated) {
+      console.log("redirecting to login");
+      window.location.href = Env.authUrl + "login?returnUrl=" + currentUrl;
+    }
+  }
+  if (to.matched.some((record: any) => record.meta.requiresLicense)) {
+    console.log("snomed license accepted:" + store.state.snomedLicenseAccepted);
+    if (store.state.snomedLicenseAccepted !== "true") {
+      return {
+        path: "/snomedLicense"
+      };
+    }
+  }
 });
 
 router.afterEach(to => {
