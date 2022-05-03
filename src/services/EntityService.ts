@@ -2,7 +2,6 @@ import axios, { CancelToken } from "axios";
 import {
   GraphData,
   EntityReferenceNode,
-  PartialBundle,
   EntityDefinitionDto,
   TTBundle,
   TTIriRef,
@@ -13,9 +12,6 @@ import {
   FiltersAsIris
 } from "im-library/dist/types/interfaces/Interfaces";
 import { Models, Env } from "im-library";
-const {
-  Search: { ConceptSummary, SearchResponse, SearchRequest }
-} = Models;
 
 export default class EntityService {
   static api = Env.api;
@@ -73,7 +69,7 @@ export default class EntityService {
     }
   }
 
-  public static async getPartialEntityBundle(iri: string, predicates: string[]): Promise<PartialBundle> {
+  public static async getPartialEntityBundle(iri: string, predicates: string[]): Promise<TTBundle> {
     try {
       return await axios.get(this.api + "api/entity/public/partialBundle", {
         params: {
@@ -82,11 +78,11 @@ export default class EntityService {
         }
       });
     } catch (error) {
-      return {} as PartialBundle;
+      return {} as TTBundle;
     }
   }
 
-  public static async getDefinitionBundle(iri: string): Promise<PartialBundle> {
+  public static async getDefinitionBundle(iri: string): Promise<TTBundle> {
     try {
       return await axios.get(this.api + "api/entity/public/inferredBundle", {
         params: {
@@ -94,7 +90,7 @@ export default class EntityService {
         }
       });
     } catch (error) {
-      return {} as PartialBundle;
+      return {} as TTBundle;
     }
   }
 
