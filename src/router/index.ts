@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Catalogue from "../views/Catalogue.vue";
 import CatalogueDashboard from "@/components/catalogue/CatalogueDashboard.vue";
 import InstanceDetails from "@/components/catalogue/InstanceDetails.vue";
-import { SnomedLicense, Env, Helpers } from "im-library";
+import { SnomedLicense, Env, Helpers, AccessDenied } from "im-library";
 import store from "@/store/index";
 import { nextTick } from "vue";
 
@@ -40,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/snomedLicense",
     name: "License",
     component: SnomedLicense
+  },
+  {
+    path: "/401",
+    name: "AccessDenied",
+    component: AccessDenied
   }
 ];
 
