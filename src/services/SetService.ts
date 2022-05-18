@@ -5,7 +5,7 @@ const {
 } = Models;
 
 export default class SetService {
-  static api = Env.api;
+  static api = Env.API;
 
   public static async download(conceptIri: string, expanded: boolean, v1: boolean) {
     return await axios.get(this.api + "api/set/public/download", {
