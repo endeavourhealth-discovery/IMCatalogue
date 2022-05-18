@@ -15,7 +15,7 @@
     <TabView v-model:activeIndex="active" class="side-menu" :style="'maxHeight: ' + sideMenuHeight + ';'">
       <TabPanel>
         <template #header>
-          <i class="fas fa-search icon-header" aria-hidden="true" />
+          <i class="fa-solid fa-magnifying-glass icon-header" aria-hidden="true" />
           <span>Search Results</span>
         </template>
         <div class="p-fluid results-filter-container">
@@ -25,7 +25,7 @@
       </TabPanel>
       <TabPanel>
         <template #header>
-          <i class="fas fa-history icon-header" aria-hidden="true" />
+          <i class="fa-solid fa-clock-rotate-left icon-header" aria-hidden="true" />
           <span>History</span>
         </template>
         <CatalogueHistory :history="history" />
