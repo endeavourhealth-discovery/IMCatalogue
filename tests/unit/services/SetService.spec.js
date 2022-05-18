@@ -1,8 +1,8 @@
 import SetService from "@/services/SetService";
 import axios from "axios";
-import {Env} from "im-library";
+import { Env } from "im-library";
 
-const api = Env.api;
+const api = Env.API;
 
 describe("SetService.ts ___ axios success", () => {
   beforeEach(() => {

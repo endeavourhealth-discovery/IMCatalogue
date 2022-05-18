@@ -14,7 +14,7 @@ import {
 import { Models, Env } from "im-library";
 
 export default class EntityService {
-  static api = Env.api;
+  static api = Env.API;
 
   public static async downloadConcept(iri: string, format: string): Promise<any> {
     try {
@@ -32,7 +32,7 @@ export default class EntityService {
 
   public static async getFullExportSet(iri: string): Promise<any> {
     const client = axios.create({
-      baseURL: Env.api,
+      baseURL: Env.API,
       timeout: 0
     });
 

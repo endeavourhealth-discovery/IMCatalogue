@@ -1,8 +1,8 @@
 import axios from "axios";
-import {Env} from "im-library";
+import { Env } from "im-library";
 
 export default class WorkflowService {
-  static api = Env.api;
+  static api = Env.API;
 
   public static async getWorkflows(): Promise<any[]> {
     try {

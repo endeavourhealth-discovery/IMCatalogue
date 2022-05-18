@@ -1,8 +1,8 @@
 import WorkflowService from "@/services/WorkflowService";
 import axios from "axios";
-import {Env} from "im-library";
+import { Env } from "im-library";
 
-const api = Env.api;
+const api = Env.API;
 
 describe("WorkflowService.ts ___ axios success", () => {
   beforeEach(() => {

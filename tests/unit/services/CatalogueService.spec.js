@@ -1,9 +1,9 @@
 import axios from "axios";
 import CatalogueService from "@/services/CatalogueService";
-import {Env} from "im-library";
+import { Env } from "im-library";
 
 describe("CatalogueService.ts ___ axios success", () => {
-  const api = Env.api;
+  const api = Env.API;
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -39,7 +39,7 @@ describe("CatalogueService.ts ___ axios success", () => {
 });
 
 describe("CatalogueService.ts ___ axios fail", () => {
-  const api = Env.api;
+  const api = Env.API;
 
   beforeEach(() => {
     vi.resetAllMocks();
