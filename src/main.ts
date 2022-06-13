@@ -5,6 +5,8 @@ import store from "./store";
 import PrimeVue from "primevue/config";
 import VueClipboard from "vue3-clipboard";
 
+import CatalogueService from "./services/CatalogueService";
+
 // Font Awesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -80,12 +82,17 @@ import awsconfig from "./aws-exports";
 import axios from "axios";
 
 // IMLibrary imports
-import IMLibrary from "im-library";
+import IMLibrary, { ConfigService } from "im-library";
 import "im-library/dist/style.css";
-import { Helpers, Env } from "im-library";
+import { Helpers, Env, EntityService, SetService } from "im-library";
 const {
   DataTypeCheckers: { isObjectHasKeys }
 } = Helpers;
+
+const catalogueService = new CatalogueService(axios);
+const configService = new ConfigService(axios);
+const entityService = new EntityService(axios);
+const setService = new SetService(axios);
 
 Amplify.configure(awsconfig);
 Auth.configure(awsconfig);
@@ -150,7 +157,15 @@ const app = createApp(App)
   .component("InputSwitch", InputSwitch)
   .component("Tag", Tag);
 
+// register custom $properties
+app.config.globalProperties.$catalogueService = catalogueService;
+app.config.globalProperties.$configService = configService;
+app.config.globalProperties.$entityService = entityService;
+app.config.globalProperties.$setService = setService;
+
 const vm = app.mount("#app");
+
+export default vm;
 
 axios.interceptors.request.use(async request => {
   if (store.state.isLoggedIn && Env.API && request.url?.startsWith(Env.API)) {

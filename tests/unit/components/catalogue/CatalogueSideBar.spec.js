@@ -2,7 +2,6 @@ import CatalogueSideBar from "@/components/catalogue/CatalogueSideBar.vue";
 import InputText from "primevue/inputtext";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
-import CatalogueService from "@/services/CatalogueService";
 import { flushPromises, shallowMount } from "@vue/test-utils";
 import axios from "axios";
 
@@ -11,6 +10,7 @@ describe("CatalogueSideBar.vue ___ no catalogueSearchResults", () => {
   let mockStore;
   let docSpy;
   let windowSpy;
+  let mockCatalogueService;
 
   const SEARCH_RESULTS = [
     { iriType: { "@id": "Address (record type)" }, "@id": "http://loc.endhealth.info/im#8F779" },
@@ -31,7 +31,7 @@ describe("CatalogueSideBar.vue ___ no catalogueSearchResults", () => {
 
     mockStore = { state: { catalogueSearchResults: [] }, commit: vi.fn() };
 
-    CatalogueService.getSearchResult = vi.fn().mockResolvedValue(SEARCH_RESULTS);
+    mockCatalogueService = { getSearchResult: vi.fn().mockResolvedValue(SEARCH_RESULTS) };
 
     windowSpy = vi.spyOn(window, "getComputedStyle");
     windowSpy.mockReturnValue({ getPropertyValue: vi.fn().mockReturnValue("16px") });
@@ -40,7 +40,7 @@ describe("CatalogueSideBar.vue ___ no catalogueSearchResults", () => {
     docSpy.mockReturnValue(undefined);
 
     wrapper = shallowMount(CatalogueSideBar, {
-      global: { components: { InputText, TabPanel, TabView }, mocks: { $store: mockStore } },
+      global: { components: { InputText, TabPanel, TabView }, mocks: { $store: mockStore, $catalogueService: mockCatalogueService } },
       props: { history: [], typeOptions: TYPE_OPTIONS }
     });
 
@@ -106,8 +106,8 @@ describe("CatalogueSideBar.vue ___ no catalogueSearchResults", () => {
     expect(wrapper.vm.loading).toBe(true);
     await flushPromises();
     await wrapper.vm.$nextTick();
-    expect(CatalogueService.getSearchResult).toHaveBeenCalledTimes(1);
-    expect(CatalogueService.getSearchResult).toHaveBeenCalledWith("sco", [], token.token);
+    expect(mockCatalogueService.getSearchResult).toHaveBeenCalledTimes(1);
+    expect(mockCatalogueService.getSearchResult).toHaveBeenCalledWith("sco", [], token.token);
     expect(mockStore.commit).toHaveBeenCalled();
     expect(mockStore.commit).toHaveBeenCalledWith("updateCatalogueSearchResults", SEARCH_RESULTS);
   });
@@ -180,6 +180,7 @@ describe("CatalogueSideBar.vue ___ catalogueSearchResults", () => {
   let mockStore;
   let docSpy;
   let windowSpy;
+  let mockCatalogueService;
 
   const SEARCH_RESULTS = [
     { iriType: { "@id": "Address (record type)" }, "@id": "http://loc.endhealth.info/im#8F779" },
@@ -200,7 +201,7 @@ describe("CatalogueSideBar.vue ___ catalogueSearchResults", () => {
 
     mockStore = { state: { catalogueSearchResults: SEARCH_RESULTS }, commit: vi.fn() };
 
-    CatalogueService.getSearchResult = vi.fn().mockResolvedValue(SEARCH_RESULTS);
+    mockCatalogueService = { getSearchResult: vi.fn().mockResolvedValue(SEARCH_RESULTS) };
 
     windowSpy = vi.spyOn(window, "getComputedStyle");
     windowSpy.mockReturnValue({ getPropertyValue: vi.fn().mockReturnValue("16px") });
@@ -209,7 +210,7 @@ describe("CatalogueSideBar.vue ___ catalogueSearchResults", () => {
     docSpy.mockReturnValue(undefined);
 
     wrapper = shallowMount(CatalogueSideBar, {
-      global: { components: { InputText, TabPanel, TabView }, mocks: { $store: mockStore } },
+      global: { components: { InputText, TabPanel, TabView }, mocks: { $store: mockStore, $catalogueService: mockCatalogueService } },
       props: { history: [], typeOptions: TYPE_OPTIONS }
     });
 
