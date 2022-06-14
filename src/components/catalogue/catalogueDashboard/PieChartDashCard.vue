@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import LoggerService from "im-library";
 import ResizeablePieChart from "@/components/catalogue/catalogueDashboard/pieChartDashCard/ResizablePieChart.vue";
 
 export default defineComponent({
@@ -48,7 +47,7 @@ export default defineComponent({
     setChartSize(): void {
       const container = document.getElementById(this.id) as HTMLElement;
       if (!container) {
-        LoggerService.error(undefined, `Failed to set chart size for element id: ${this.id}`);
+        this.$loggerService.error(undefined, `Failed to set chart size for element id: ${this.id}`);
         return;
       }
       const html = document.documentElement;

@@ -1,6 +1,7 @@
 import WorkflowService from "@/services/WorkflowService";
 import axios from "axios";
-import { Env } from "im-library";
+import { Services } from "im-library";
+const { Env } = Services;
 
 const api = Env.API;
 
