@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts">
-import CatalogueService from "@/services/CatalogueService";
 import { defineComponent, PropType } from "@vue/runtime-core";
 import CatalogueSearchResults from "@/components/catalogue/catalogueSideBar/CatalogueSearchResults.vue";
 import CatalogueFilters from "@/components/catalogue/catalogueSideBar/CatalogueFilters.vue";
@@ -92,7 +91,7 @@ export default defineComponent({
       const axiosSource = axios.CancelToken.source();
       this.request = { cancel: axiosSource.cancel, msg: "Loading..." };
       const selectedTypeIris = this.selectedTypes.map(type => type.iri);
-      this.searchResults = await CatalogueService.getSearchResult(this.searchTerm, selectedTypeIris, axiosSource.token);
+      this.searchResults = await this.$catalogueService.getSearchResult(this.searchTerm, selectedTypeIris, axiosSource.token);
       this.$store.commit("updateCatalogueSearchResults", this.searchResults);
       this.loading = false;
     },

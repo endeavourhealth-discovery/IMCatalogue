@@ -10,7 +10,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CatalogueService from "@/services/CatalogueService";
 import CatalogueSideBar from "@/components/catalogue/CatalogueSideBar.vue";
 import { mapState } from "vuex";
 import { InstanceHistoryItem, TTBundle, SimpleCount } from "im-library/dist/types/interfaces/Interfaces";
@@ -51,12 +50,12 @@ export default defineComponent({
     },
 
     async getTypesCount(): Promise<void> {
-      const result = await CatalogueService.getTypesCount();
+      const result = await this.$catalogueService.getTypesCount();
       this.types = result;
     },
 
     async getInstance(): Promise<void> {
-      this.instance = await CatalogueService.getPartialInstance(this.instanceIri);
+      this.instance = await this.$catalogueService.getPartialInstance(this.instanceIri);
     },
 
     updateHistory(historyItem: InstanceHistoryItem): void {

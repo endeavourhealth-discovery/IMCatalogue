@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import AuthService from "@/services/AuthService";
-import ConfigService from "@/services/ConfigService";
 import { HistoryItem } from "im-library/dist/types/interfaces/Interfaces";
 import { Helpers, Models, Constants, LoggerService } from "im-library";
 const {
@@ -12,6 +11,7 @@ const {
   CustomAlert
 } = Models;
 const { Avatars } = Constants;
+import vm from "@/main";
 
 export default createStore({
   // update stateType.ts when adding new state!
@@ -61,7 +61,7 @@ export default createStore({
   },
   actions: {
     async fetchBlockedIris({ commit }) {
-      const blockedIris = await ConfigService.getXmlSchemaDataTypes();
+      const blockedIris = await vm.$configService.getXmlSchemaDataTypes();
       commit("updateBlockedIris", blockedIris);
     },
 

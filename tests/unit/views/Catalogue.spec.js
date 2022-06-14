@@ -2,12 +2,14 @@ import { flushPromises, shallowMount } from "@vue/test-utils";
 import Catalogue from "@/views/Catalogue.vue";
 import CatalogueService from "@/services/CatalogueService";
 import { Vocabulary } from "im-library";
+import TopBar from "im-library";
 const { IM } = Vocabulary;
 
 describe("Catalogue.vue ___ instanceIri", () => {
   let wrapper;
   let mockRouter;
   let mockStore;
+  let mockCatalogueService;
 
   const INSTANCE = {
     entity: {
@@ -50,14 +52,15 @@ describe("Catalogue.vue ___ instanceIri", () => {
       commit: vi.fn()
     };
 
-    CatalogueService.getPartialInstance = vi.fn().mockResolvedValue(INSTANCE);
-
-    CatalogueService.getTypesCount = vi.fn().mockResolvedValue(TYPES);
+    mockCatalogueService = {
+      getPartialInstance: vi.fn().mockResolvedValue(INSTANCE),
+      getTypesCount: vi.fn().mockResolvedValue(TYPES)
+    };
 
     wrapper = shallowMount(Catalogue, {
       global: {
-        components: {},
-        mocks: { $router: mockRouter, $store: mockStore },
+        components: { TopBar },
+        mocks: { $router: mockRouter, $store: mockStore, $catalogueService: mockCatalogueService },
         stubs: ["router-view"]
       }
     });
@@ -101,15 +104,15 @@ describe("Catalogue.vue ___ instanceIri", () => {
 
   it("can getTypesCount", async () => {
     wrapper.vm.getTypesCount();
-    expect(CatalogueService.getTypesCount).toHaveBeenCalledTimes(1);
+    expect(mockCatalogueService.getTypesCount).toHaveBeenCalledTimes(1);
     await flushPromises();
     expect(wrapper.vm.types).toStrictEqual(TYPES);
   });
 
   it("can get instance", async () => {
     wrapper.vm.getInstance();
-    expect(CatalogueService.getPartialInstance).toHaveBeenCalledTimes(1);
-    expect(CatalogueService.getPartialInstance).toHaveBeenCalledWith("http://org.endhealth.info/im#FQK48");
+    expect(mockCatalogueService.getPartialInstance).toHaveBeenCalledTimes(1);
+    expect(mockCatalogueService.getPartialInstance).toHaveBeenCalledWith("http://org.endhealth.info/im#FQK48");
     await flushPromises();
     expect(wrapper.vm.instance).toStrictEqual(INSTANCE);
   });
@@ -130,6 +133,7 @@ describe("Catalogue.vue ___ no instanceIri", () => {
   let wrapper;
   let mockRouter;
   let mockStore;
+  let mockCatalogueService;
 
   const INSTANCE = {
     entity: {
@@ -172,14 +176,15 @@ describe("Catalogue.vue ___ no instanceIri", () => {
       commit: vi.fn()
     };
 
-    CatalogueService.getPartialInstance = vi.fn().mockResolvedValue(INSTANCE);
-
-    CatalogueService.getTypesCount = vi.fn().mockResolvedValue(TYPES);
+    mockCatalogueService = {
+      getPartialInstance: vi.fn().mockResolvedValue(INSTANCE),
+      getTypesCount: vi.fn().mockResolvedValue(TYPES)
+    };
 
     wrapper = shallowMount(Catalogue, {
       global: {
-        components: {},
-        mocks: { $router: mockRouter, $store: mockStore },
+        components: { TopBar },
+        mocks: { $router: mockRouter, $store: mockStore, $catalogueService: mockCatalogueService },
         stubs: ["router-view"]
       }
     });

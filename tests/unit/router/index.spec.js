@@ -4,6 +4,8 @@ import Toast from "primevue/toast";
 import store from "@/store/index";
 import { flushPromises, shallowMount } from "@vue/test-utils";
 
+vi.mock("@/main");
+
 describe("router", () => {
   beforeEach(() => {
     console.log = vi.fn();
