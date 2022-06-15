@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import AuthService from "@/services/AuthService";
 import { HistoryItem } from "im-library/dist/types/interfaces/Interfaces";
-import { Helpers, Models, Constants, LoggerService } from "im-library";
+import { Helpers, Models, Constants } from "im-library";
 const {
   DataTypeCheckers: { isArrayHasLength, isObjectHasKeys }
 } = Helpers;
@@ -93,9 +93,9 @@ export default createStore({
         } else {
           dispatch("logoutCurrentUser").then(resLogout => {
             if (resLogout.status === 200) {
-              LoggerService.info(undefined, "Force logout successful");
+              vm.$loggerService.info(undefined, "Force logout successful");
             } else {
-              LoggerService.error(undefined, "Force logout failed");
+              vm.$loggerService.error(undefined, "Force logout failed");
             }
           });
         }

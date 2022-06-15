@@ -1,6 +1,7 @@
 import { CancelToken } from "axios";
 import { SimpleCount, TTBundle } from "im-library/dist/types/interfaces/Interfaces";
-import { Env } from "im-library";
+import { Services } from "im-library";
+const { Env } = Services;
 
 export default class CatalogueService {
   private api = Env.API;
